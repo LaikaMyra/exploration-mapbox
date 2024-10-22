@@ -14,12 +14,31 @@
 <body>
     <div id="map"></div>
     <script>
-        // Replace this line:
-        window.MAPBOX_ACCESS_TOKEN = '${MAPBOX_ACCESS_TOKEN}';
+        // Set the access token directly
+        mapboxgl.accessToken = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+        
+        // Initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-104.9876, 39.7405], // Denver coordinates
+            zoom: 12
+        });
 
-        // With this:
-        window.MAPBOX_ACCESS_TOKEN = '<%= process.env.MAPBOX_ACCESS_TOKEN %>';
+        // Add markers when the map loads
+        map.on('load', function() {
+            // Add marker for Denver
+            new mapboxgl.Marker()
+                .setLngLat([-104.9876, 39.7405])
+                .setPopup(new mapboxgl.Popup().setHTML("<h3>Denver, CO</h3>"))
+                .addTo(map);
+
+            // Add another marker (example)
+            new mapboxgl.Marker({ color: 'red' })
+                .setLngLat([-104.9965, 39.7280])
+                .setPopup(new mapboxgl.Popup().setHTML("<h3>Denver Art Museum</h3>"))
+                .addTo(map);
+        });
     </script>
-    <script src="map.js"></script>
 </body>
 </html>
