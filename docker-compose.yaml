@@ -14,5 +14,4 @@ services:
       - PORT=${PORT}
     command: >
       bash -c "npm install -g http-server &&
-               echo '<html><body><div id=\"map\" style=\"width: 100%; height: 400px;\"></div><script src=\"https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js\"></script><link href=\"https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css\" rel=\"stylesheet\" /><script>mapboxgl.accessToken = \"${MAPBOX_ACCESS_TOKEN}\"; var map = new mapboxgl.Map({container: \"map\", style: \"mapbox://styles/mapbox/streets-v11\"});</script></body></html>' > /app/index.html &&
                http-server /app -p ${PORT}"
