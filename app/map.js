@@ -3,26 +3,21 @@ mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-104.9903, 39.7392], // Denver coordinates
-    zoom: 12 // Increased zoom level for better city view
+    center: [-104.9876, 39.7405], // Denver coordinates
+    zoom: 12
 });
 
 map.on('load', () => {
-    // Add a person pin (example: Denver Union Station)
-    new mapboxgl.Marker({
-        color: "#FF0000",
-        draggable: false
-    })
-    .setLngLat([-104.9999, 39.7526])
-    .setPopup(new mapboxgl.Popup().setHTML("<h3>Person</h3><p>Denver Union Station area</p>"))
-    .addTo(map);
+    // Add pins
+    const pins = [
+        { lngLat: [-104.9876, 39.7405], color: '#FF0000' },
+        { lngLat: [-104.9800, 39.7500], color: '#00FF00' },
+        { lngLat: [-105.0000, 39.7300], color: '#0000FF' }
+    ];
 
-    // Add a building pin (example: Colorado State Capitol)
-    new mapboxgl.Marker({
-        color: "#0000FF",
-        draggable: false
-    })
-    .setLngLat([-104.9848, 39.7393])
-    .setPopup(new mapboxgl.Popup().setHTML("<h3>Building</h3><p>Colorado State Capitol</p>"))
-    .addTo(map);
+    pins.forEach((pin, index) => {
+        new mapboxgl.Marker({ color: pin.color })
+            .setLngLat(pin.lngLat)
+            .addTo(map);
+    });
 });
