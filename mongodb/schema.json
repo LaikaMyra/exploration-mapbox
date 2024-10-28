@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "coordinates": {
+        "type": "object",
+        "properties": {
+          "lat": { "type": "number" },
+          "lng": { "type": "number" }
+        },
+        "required": ["lat", "lng"]
+      }
+    },
+    "types": {
+      "calls": {
+        "required": ["callId", "timestamp", "location", "status"],
+        "indexes": [
+          { "key": { "callId": 1 }, "unique": true },
+          { "key": { "location.locationId": 1 } },
+          { "key": { "status": 1 } }
+        ]
+      },
+      "jobs": {
+        "required": ["jobId", "callId", "status"],
+        "indexes": [
+          { "key": { "jobId": 1 }, "unique": true },
+          { "key": { "callId": 1 } },
+          { "key": { "assignedTechnician": 1 } }
+        ]
+      },
+      "locations": {
+        "required": ["locationId", "coordinates"],
+        "indexes": [
+          { "key": { "locationId": 1 }, "unique": true },
+          { "key": { "coordinates": "2dsphere" } }
+        ]
+      }
+    }
+  }
