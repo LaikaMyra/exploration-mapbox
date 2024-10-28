@@ -7,17 +7,40 @@ const map = new mapboxgl.Map({
     zoom: 12
 });
 
-map.on('load', () => {
-    // Add pins
-    const pins = [
-        { lngLat: [-104.9876, 39.7405], color: '#FF0000' },
-        { lngLat: [-104.9800, 39.7500], color: '#00FF00' },
-        { lngLat: [-105.0000, 39.7300], color: '#0000FF' }
-    ];
+map.on('load', async () => {
+    try {
+        const [locationsResponse, jobsResponse] = await Promise.all([
+            fetch('/api/locations'),
+            fetch('/api/jobs')
+        ]);
+        
+        const locations = await locationsResponse.json();
+        const jobs = await jobsResponse.json();
 
-    pins.forEach((pin, index) => {
-        new mapboxgl.Marker({ color: pin.color })
-            .setLngLat(pin.lngLat)
-            .addTo(map);
-    });
+        // Add employee locations (blue pins)
+        locations.forEach(location => {
+            new mapboxgl.Marker({ color: '#0000FF' })
+                .setLngLat(location.coordinates)
+                .setPopup(new mapboxgl.Popup().setHTML(`
+                    <h3>${location.name}</h3>
+                    <p>Location ID: ${location.locationId}</p>
+                `))
+                .addTo(map);
+        });
+
+        // Add job locations (red pins)
+        jobs.forEach(job => {
+            new mapboxgl.Marker({ color: '#FF0000' })
+                .setLngLat(job.location.coordinates)
+                .setPopup(new mapboxgl.Popup().setHTML(`
+                    <h3>${job.title}</h3>
+                    <p>Job ID: ${job.jobId}</p>
+                    <p>Status: ${job.status}</p>
+                    <p>Priority: ${job.priority}</p>
+                `))
+                .addTo(map);
+        });
+    } catch (error) {
+        console.error('Error loading map data:', error);
+    }
 });

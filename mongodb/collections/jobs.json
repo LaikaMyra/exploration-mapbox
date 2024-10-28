@@ -1,31 +1,22 @@
-{
-    "jobs": [
-      {
-        "_id": ObjectId("5f9b2c1e3d4a6f2b8c1d5e7b"),
+[
+    {
         "jobId": "JOB-2024-001",
-        "callId": "CALL-2024-001",
-        "created": "2024-10-22T09:45:00Z",
-        "updated": "2024-10-22T10:00:00Z",
+        "title": "Emergency Repair",
+        "location": {
+            "coordinates": [-104.9800, 39.7500],
+            "name": "Client Site A"
+        },
         "status": "in-progress",
-        "assignedTechnician": "TECH-456",
-        "estimatedDuration": "4 hours",
-        "priority": "high",
-        "additionalDetails": {
-          "equipmentNeeded": ["water pump", "dehumidifier"],
-          "accessRequirements": "Security clearance needed",
-          "riskAssessment": "Medium risk - electrical equipment present"
+        "priority": "high"
+    },
+    {
+        "jobId": "JOB-2024-002",
+        "title": "Maintenance Check",
+        "location": {
+            "coordinates": [-104.9700, 39.7450],
+            "name": "Client Site B"
         },
-        "customerFeedback": {
-          "preferredTimeWindow": "ASAP",
-          "specialInstructions": "Please report to security desk"
-        },
-        "operatorNotes": [
-          {
-            "timestamp": "2024-10-22T09:47:00Z",
-            "operator": "OP-789",
-            "note": "Customer emphasized urgency due to sensitive equipment"
-          }
-        ]
-      }
-    ]
-  }
+        "status": "pending",
+        "priority": "medium"
+    }
+]
