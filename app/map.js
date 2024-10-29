@@ -14,9 +14,12 @@ map.on('load', async () => {
         console.log('Map loaded, fetching data...');
 
         const [locationsResponse, jobsResponse] = await Promise.all([
-            fetch('/api/locations'),
-            fetch('/api/jobs')
+            fetch('./api/locations'),
+            fetch('./api/jobs')
         ]);
+        
+        if (!locationsResponse.ok) throw new Error(`Locations HTTP error! status: ${locationsResponse.status}`);
+        if (!jobsResponse.ok) throw new Error(`Jobs HTTP error! status: ${jobsResponse.status}`);
         
         const locations = await locationsResponse.json();
         const jobs = await jobsResponse.json();

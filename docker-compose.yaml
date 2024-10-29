@@ -6,6 +6,7 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
+      - ./mongodb:/mongodb
     ports:
       - "${PORT}:${PORT}"
     environment:
