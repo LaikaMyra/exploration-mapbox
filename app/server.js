@@ -12,6 +12,10 @@ const mimeTypes = {
 };
 
 const server = http.createServer((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     if (req.url === '/') {
         fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err, content) => {
             if (err) {
@@ -34,25 +38,55 @@ const server = http.createServer((req, res) => {
             res.end(content);
         });
     } else if (req.url === '/api/locations') {
-        fs.readFile(path.join(__dirname, '../mongodb/collections/locations.json'), 'utf8', (err, data) => {
-            if (err) {
-                res.writeHead(500);
-                res.end('Error loading locations');
+        try {
+            const locationsPath = path.join(__dirname, '../mongodb/collections/locations.json');
+            console.log('Reading locations from:', locationsPath);
+            
+            if (!fs.existsSync(locationsPath)) {
+                console.error('Locations file not found');
+                res.writeHead(404);
+                res.end('Locations file not found');
                 return;
             }
-            res.writeHead(200, { 'Content-Type': 'application/json' });
+
+            const data = fs.readFileSync(locationsPath, 'utf8');
+            console.log('Locations data:', data);
+            
+            res.writeHead(200, { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            });
             res.end(data);
-        });
+        } catch (error) {
+            console.error('Error serving locations:', error);
+            res.writeHead(500);
+            res.end('Internal Server Error');
+        }
     } else if (req.url === '/api/jobs') {
-        fs.readFile(path.join(__dirname, '../mongodb/collections/jobs.json'), 'utf8', (err, data) => {
-            if (err) {
-                res.writeHead(500);
-                res.end('Error loading jobs');
+        try {
+            const jobsPath = path.join(__dirname, '../mongodb/collections/jobs.json');
+            console.log('Reading jobs from:', jobsPath);
+            
+            if (!fs.existsSync(jobsPath)) {
+                console.error('Jobs file not found');
+                res.writeHead(404);
+                res.end('Jobs file not found');
                 return;
             }
-            res.writeHead(200, { 'Content-Type': 'application/json' });
+
+            const data = fs.readFileSync(jobsPath, 'utf8');
+            console.log('Jobs data:', data);
+            
+            res.writeHead(200, { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            });
             res.end(data);
-        });
+        } catch (error) {
+            console.error('Error serving jobs:', error);
+            res.writeHead(500);
+            res.end('Internal Server Error');
+        }
     } else {
         res.writeHead(404);
         res.end('Not found');
