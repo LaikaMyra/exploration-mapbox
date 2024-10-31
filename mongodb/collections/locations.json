@@ -2,11 +2,20 @@
     {
         "locationId": "LOC-001",
         "coordinates": [-104.9876, 39.7405],
-        "name": "Denver HQ"
+        "name": "Denver HQ",
+        "type": "job",
+        "jobDetails": {
+            "jobId": "JOB-2024-001",
+            "title": "Emergency Repair",
+            "status": "in-progress",
+            "priority": "high"
+        }
     },
     {
         "locationId": "LOC-002",
         "coordinates": [-104.9965, 39.7280],
-        "name": "Denver South Office"
+        "name": "Denver South Office",
+        "type": "technician",
+        "technicianId": {"$oid": "60d5ecb8b5c9c62b3c7c1234"}
     }
 ]
