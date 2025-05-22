@@ -28,7 +28,7 @@ map.on('load', async () => {
         console.log('Technicians data:', technicians);
 
         // Process locations based on type
-        locations.forEach(location => {
+        locations.forEach(async location => {
             if (location.type === 'technician') {
                 // Find the technician details
                 const technician = technicians.find(tech => 
@@ -37,13 +37,15 @@ map.on('load', async () => {
                 
                 const markerElement = document.createElement('div');
                 markerElement.className = 'marker-container';
-                
+
+                // Fetch the SVG asset and inject it
+                const svgResponse = await fetch('../icons/icon-fieldVanModern.svg');
+                const svgText = await svgResponse.text();
+
                 markerElement.innerHTML = `
                     <div class="pin-wrapper">
                         <div class="van-icon">
-                            <svg width="40" height="24" viewBox="0 0 40 24" fill="#0000FF">
-                                <path d="M35 8h-3V6.5c0-3-2.5-5.5-5.5-5.5H5C2.2 1 0 3.2 0 6v12c0 1.1.9 2 2 2h2c0-2.2 1.8-4 4-4s4 1.8 4 4h15c0-2.2 1.8-4 4-4s4 1.8 4 4h3c1.1 0 2-.9 2-2v-6c0-2.2-1.8-4-4-4zM8 17c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm25 0c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm5-7h-3V8h3v2z"/>
-                            </svg>
+                            ${svgText}
                         </div>
                         <div class="technician-name">${technician ? technician.name : 'Unknown'}</div>
                     </div>`;
