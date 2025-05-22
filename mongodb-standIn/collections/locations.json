@@ -17,5 +17,17 @@
         "name": "Denver South Office",
         "type": "technician",
         "technicianId": {"$oid": "60d5ecb8b5c9c62b3c7c1234"}
+    },
+    {
+        "locationId": "LOC-003",
+        "coordinates": [-104.9700, 39.7450],
+        "name": "Client Site B",
+        "type": "job",
+        "jobDetails": {
+            "jobId": "JOB-2024-002",
+            "title": "Maintenance Check",
+            "status": "pending",
+            "priority": "medium"
+        }
     }
 ]

@@ -14,8 +14,8 @@ map.on('load', async () => {
         console.log('Map loaded, fetching data...');
 
         const [locationsResponse, techniciansResponse] = await Promise.all([
-            fetch('./api/locations'),
-            fetch('./api/technicians')
+            fetch('/api/locations'),
+            fetch('/api/technicians')
         ]);
         
         if (!locationsResponse.ok) throw new Error(`Locations HTTP error! status: ${locationsResponse.status}`);
@@ -39,7 +39,7 @@ map.on('load', async () => {
                 markerElement.className = 'marker-container';
 
                 // Fetch the SVG asset and inject it
-                const svgResponse = await fetch('../icons/icon-fieldVanModern.svg');
+                const svgResponse = await fetch('/icons/icon-fieldVanModern.svg');
                 const svgText = await svgResponse.text();
 
                 markerElement.innerHTML = `
@@ -64,10 +64,14 @@ map.on('load', async () => {
                 // Job location markers
                 const jobMarker = document.createElement('div');
                 jobMarker.className = 'job-marker';
+                if (location.jobDetails && location.jobDetails.priority === 'high') {
+                    jobMarker.classList.add('high-priority');
+                }
+                jobMarker.textContent = '⚡';
 
                 new mapboxgl.Marker({
                     element: jobMarker,
-                    color: '#FF0000' // Red for jobs
+                    color: '#FF0000' // Red for jobs (not used with custom element)
                 })
                     .setLngLat(location.coordinates)
                     .setPopup(new mapboxgl.Popup().setHTML(`
