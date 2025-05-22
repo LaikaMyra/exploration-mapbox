@@ -139,7 +139,7 @@ map.on('load', async () => {
 
                 markerElement.innerHTML = `
                     <div class="pin-wrapper">
-                        <div class="van-icon">
+                        <div class="van-icon${technician && technician.status && technician.status.toLowerCase() === 'available' ? ' van-available' : ''}">
                             ${svgText}
                         </div>
                         <div class="technician-name">${technician ? technician.name : 'Unknown'}</div>
@@ -152,6 +152,7 @@ map.on('load', async () => {
                     .setPopup(new mapboxgl.Popup().setHTML(`
                         <h3>${technician ? technician.name : 'Unknown Technician'}</h3>
                         <p>Status: ${technician ? technician.status : 'N/A'}</p>
+                        ${technician && technician.status && technician.status.toLowerCase() === 'available' ? '<button class="assign-job-btn">Assign To Job</button>' : ''}
                     `))
                     .addTo(map);
 
