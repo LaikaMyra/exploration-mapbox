@@ -2,9 +2,104 @@ mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 
 console.log('Access Token:', window.MAPBOX_ACCESS_TOKEN);
 
+// Import the custom style
+const customStyle = {
+    version: 8,
+    name: 'Faded White',
+    sources: {
+        'mapbox-streets': {
+            type: 'vector',
+            url: 'mapbox://mapbox.mapbox-streets-v8'
+        }
+    },
+    sprite: 'mapbox://sprites/mapbox/streets-v11',
+    glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
+    layers: [
+        {
+            id: 'background',
+            type: 'background',
+            paint: {
+                'background-color': '#FFFFFF'
+            }
+        },
+        {
+            id: 'land',
+            type: 'background',
+            paint: {
+                'background-color': '#F5F5F5'
+            }
+        },
+        {
+            id: 'water',
+            type: 'fill',
+            source: 'mapbox-streets',
+            'source-layer': 'water',
+            paint: {
+                'fill-color': '#E6E6E6'
+            }
+        },
+        {
+            id: 'landuse',
+            type: 'fill',
+            source: 'mapbox-streets',
+            'source-layer': 'landuse',
+            paint: {
+                'fill-color': '#F0F0F0'
+            }
+        },
+        {
+            id: 'building',
+            type: 'fill',
+            source: 'mapbox-streets',
+            'source-layer': 'building',
+            paint: {
+                'fill-color': '#E0E0E0'
+            }
+        },
+        {
+            id: 'road',
+            type: 'line',
+            source: 'mapbox-streets',
+            'source-layer': 'road',
+            paint: {
+                'line-color': '#CCCCCC',
+                'line-width': 1
+            }
+        },
+        {
+            id: 'road-major',
+            type: 'line',
+            source: 'mapbox-streets',
+            'source-layer': 'road',
+            filter: ['in', 'class', 'primary', 'secondary', 'street', 'street_limited'],
+            paint: {
+                'line-color': '#999999',
+                'line-width': 2
+            }
+        },
+        {
+            id: 'road-label',
+            type: 'symbol',
+            source: 'mapbox-streets',
+            'source-layer': 'road',
+            layout: {
+                'text-field': '{name}',
+                'text-size': 12,
+                'text-anchor': 'center',
+                'text-allow-overlap': false
+            },
+            paint: {
+                'text-color': '#666666',
+                'text-halo-color': '#FFFFFF',
+                'text-halo-width': 1
+            }
+        }
+    ]
+};
+
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: customStyle,
     center: [-104.9876, 39.7405],
     zoom: 12
 });

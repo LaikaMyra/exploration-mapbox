@@ -8,7 +8,7 @@ services:
       - ./app:/app
       - ./mongodb:/mongodb
       - ./mongodb-standIn:/mongodb-standIn
-      - ./icons:/app/icons
+      - ./app/icons:/app/icons
     ports:
       - "${PORT}:${PORT}"
     environment:

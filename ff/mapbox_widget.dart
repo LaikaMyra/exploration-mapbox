@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class MapboxWidget extends StatefulWidget {
   final String mapboxAccessToken;
@@ -34,11 +35,118 @@ class _MapboxWidgetState extends State<MapboxWidget> {
   List<Map<String, dynamic>> locations = [];
   List<Map<String, dynamic>> technicians = [];
   bool isLoading = true;
+  String? vanIconSvg;
+
+  // Custom style for faded white theme
+  static const String customStyle = '''
+{
+  "version": 8,
+  "name": "Faded White",
+  "sources": {
+    "mapbox-streets": {
+      "type": "vector",
+      "url": "mapbox://mapbox.mapbox-streets-v8"
+    }
+  },
+  "sprite": "mapbox://sprites/mapbox/streets-v11",
+  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#FFFFFF"
+      }
+    },
+    {
+      "id": "land",
+      "type": "background",
+      "paint": {
+        "background-color": "#F5F5F5"
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "#E6E6E6"
+      }
+    },
+    {
+      "id": "landuse",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "landuse",
+      "paint": {
+        "fill-color": "#F0F0F0"
+      }
+    },
+    {
+      "id": "building",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "building",
+      "paint": {
+        "fill-color": "#E0E0E0"
+      }
+    },
+    {
+      "id": "road",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "paint": {
+        "line-color": "#CCCCCC",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "road-major",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "filter": ["in", "class", "primary", "secondary", "street", "street_limited"],
+      "paint": {
+        "line-color": "#999999",
+        "line-width": 2
+      }
+    },
+    {
+      "id": "road-label",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "layout": {
+        "text-field": "{name}",
+        "text-size": 12,
+        "text-anchor": "center",
+        "text-allow-overlap": false
+      },
+      "paint": {
+        "text-color": "#666666",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      }
+    }
+  ]
+}
+''';
 
   @override
   void initState() {
     super.initState();
+    _loadAssets();
     _loadData();
+  }
+
+  Future<void> _loadAssets() async {
+    try {
+      vanIconSvg = await rootBundle.loadString('assets/icons/icon-fieldVanModern.svg');
+    } catch (e) {
+      print('Error loading assets: $e');
+    }
   }
 
   Future<void> _loadData() async {
@@ -70,6 +178,15 @@ class _MapboxWidgetState extends State<MapboxWidget> {
           orElse: () => {'name': 'Unknown', 'status': 'N/A'},
         );
 
+        // Add the van icon to the map style
+        mapController!.addImage(
+          'van-icon',
+          vanIconSvg ?? '',
+          SvgImageProperties(
+            scale: 1.0,
+          ),
+        );
+
         mapController!.addSymbol(
           SymbolOptions(
             geometry: LatLng(
@@ -87,6 +204,15 @@ class _MapboxWidgetState extends State<MapboxWidget> {
       } else if (location['type'] == 'job' && widget.showJobMarkers) {
         final jobDetails = location['jobDetails'] ?? {};
         final isHighPriority = jobDetails['priority'] == 'high';
+
+        // Add job marker to the map style
+        mapController!.addImage(
+          isHighPriority ? 'high-priority-job' : 'job',
+          '⚡',
+          SvgImageProperties(
+            scale: 1.0,
+          ),
+        );
 
         mapController!.addSymbol(
           SymbolOptions(
@@ -129,7 +255,7 @@ class _MapboxWidgetState extends State<MapboxWidget> {
         ),
         zoom: widget.initialZoom,
       ),
-      styleString: MapboxStyles.MAPBOX_STREETS,
+      styleString: customStyle, // Use our custom style
     );
   }
 } 
