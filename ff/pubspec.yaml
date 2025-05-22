@@ -1,0 +1,22 @@
+name: mapbox_flutterflow_widget
+description: A Mapbox widget for FlutterFlow applications
+version: 1.0.0
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mapbox_gl: ^0.16.0
+  http: ^0.13.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  assets:
+    - assets/icons/ 
