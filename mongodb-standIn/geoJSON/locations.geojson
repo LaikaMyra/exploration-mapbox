@@ -1,0 +1,67 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9876, 39.7405]
+            },
+            "properties": {
+                "locationId": "LOC-001",
+                "name": "Denver HQ",
+                "type": "job",
+                "jobDetails": {
+                    "jobId": "JOB-2024-001",
+                    "title": "Emergency Repair",
+                    "status": "in-progress",
+                    "priority": "high"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9965, 39.7280]
+            },
+            "properties": {
+                "locationId": "LOC-002",
+                "name": "Denver South Office",
+                "type": "technician",
+                "technicianId": "60d5ecb8b5c9c62b3c7c1234"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9920, 39.7350]
+            },
+            "properties": {
+                "locationId": "LOC-004",
+                "name": "Denver West Lot",
+                "type": "technician",
+                "technicianId": "60d5ecb8b5c9c62b3c7c1235"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9700, 39.7450]
+            },
+            "properties": {
+                "locationId": "LOC-003",
+                "name": "Client Site B",
+                "type": "job",
+                "jobDetails": {
+                    "jobId": "JOB-2024-002",
+                    "title": "Maintenance Check",
+                    "status": "pending",
+                    "priority": "medium"
+                }
+            }
+        }
+    ]
+} 

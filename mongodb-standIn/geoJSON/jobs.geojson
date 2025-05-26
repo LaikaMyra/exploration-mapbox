@@ -1,0 +1,33 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9800, 39.7500]
+            },
+            "properties": {
+                "jobId": "JOB-2024-001",
+                "title": "Emergency Repair",
+                "locationName": "Client Site A",
+                "status": "in-progress",
+                "priority": "high"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9700, 39.7450]
+            },
+            "properties": {
+                "jobId": "JOB-2024-002",
+                "title": "Maintenance Check",
+                "locationName": "Client Site B",
+                "status": "pending",
+                "priority": "medium"
+            }
+        }
+    ]
+} 

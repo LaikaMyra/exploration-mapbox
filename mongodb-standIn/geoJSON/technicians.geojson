@@ -1,0 +1,33 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9965, 39.7280]
+            },
+            "properties": {
+                "_id": "60d5ecb8b5c9c62b3c7c1234",
+                "name": "John Smith",
+                "locationId": "LOC-001",
+                "active": true,
+                "status": "available"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-104.9920, 39.7350]
+            },
+            "properties": {
+                "_id": "60d5ecb8b5c9c62b3c7c1235",
+                "name": "Jane Doe",
+                "locationId": "LOC-002",
+                "active": true,
+                "status": "on_job"
+            }
+        }
+    ]
+} 
