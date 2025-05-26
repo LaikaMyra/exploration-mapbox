@@ -2,26 +2,110 @@
     "version": 8,
     "name": "Field Service Operations",
     "sources": {
+        "mapbox-streets": {
+            "type": "vector",
+            "url": "mapbox://mapbox.mapbox-streets-v8"
+        },
         "technicians": {
-            "type": "geojson",
-            "data": "technicians"
+            "type": "vector",
+            "url": "mapbox://myrajames.cmb4ft90k1at81vpbbzbzy4sb-5aksh"
         },
         "jobs": {
-            "type": "geojson",
-            "data": "jobs"
+            "type": "vector",
+            "url": "mapbox://myrajames.cmb4fsagn1alb1npbjhumajf3-47ga6"
         },
         "locations": {
-            "type": "geojson",
-            "data": "locations"
+            "type": "vector",
+            "url": "mapbox://myrajames.cmb4fsu5m1aej1tmpft2g0gt3-9z35k"
         }
     },
     "sprite": "mapbox://sprites/mapbox/streets-v11",
     "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
     "layers": [
         {
+            "id": "background",
+            "type": "background",
+            "paint": {
+                "background-color": "#FFFFFF"
+            }
+        },
+        {
+            "id": "land",
+            "type": "background",
+            "paint": {
+                "background-color": "#F5F5F5"
+            }
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "mapbox-streets",
+            "source-layer": "water",
+            "paint": {
+                "fill-color": "#E6E6E6"
+            }
+        },
+        {
+            "id": "landuse",
+            "type": "fill",
+            "source": "mapbox-streets",
+            "source-layer": "landuse",
+            "paint": {
+                "fill-color": "#F0F0F0"
+            }
+        },
+        {
+            "id": "building",
+            "type": "fill",
+            "source": "mapbox-streets",
+            "source-layer": "building",
+            "paint": {
+                "fill-color": "#E0E0E0"
+            }
+        },
+        {
+            "id": "road",
+            "type": "line",
+            "source": "mapbox-streets",
+            "source-layer": "road",
+            "paint": {
+                "line-color": "#CCCCCC",
+                "line-width": 1
+            }
+        },
+        {
+            "id": "road-major",
+            "type": "line",
+            "source": "mapbox-streets",
+            "source-layer": "road",
+            "filter": ["in", "class", "primary", "secondary", "street", "street_limited"],
+            "paint": {
+                "line-color": "#999999",
+                "line-width": 2
+            }
+        },
+        {
+            "id": "road-label",
+            "type": "symbol",
+            "source": "mapbox-streets",
+            "source-layer": "road",
+            "layout": {
+                "text-field": "{name}",
+                "text-size": 12,
+                "text-anchor": "center",
+                "text-allow-overlap": false
+            },
+            "paint": {
+                "text-color": "#666666",
+                "text-halo-color": "#FFFFFF",
+                "text-halo-width": 1
+            }
+        },
+        {
             "id": "locations-background",
             "type": "circle",
             "source": "locations",
+            "source-layer": "locations",
             "minzoom": 0,
             "maxzoom": 24,
             "filter": ["==", ["get", "type"], "job"],
@@ -40,6 +124,7 @@
             "id": "locations-labels",
             "type": "symbol",
             "source": "locations",
+            "source-layer": "locations",
             "minzoom": 0,
             "maxzoom": 24,
             "filter": ["==", ["get", "type"], "job"],
@@ -66,6 +151,7 @@
             "id": "technicians",
             "type": "circle",
             "source": "technicians",
+            "source-layer": "technicians",
             "minzoom": 0,
             "maxzoom": 24,
             "paint": {
@@ -97,6 +183,7 @@
             "id": "technician-labels",
             "type": "symbol",
             "source": "technicians",
+            "source-layer": "technicians",
             "minzoom": 0,
             "maxzoom": 24,
             "layout": {
@@ -127,6 +214,7 @@
             "id": "jobs",
             "type": "circle",
             "source": "jobs",
+            "source-layer": "jobs",
             "minzoom": 0,
             "maxzoom": 24,
             "paint": {
@@ -158,6 +246,7 @@
             "id": "job-labels",
             "type": "symbol",
             "source": "jobs",
+            "source-layer": "jobs",
             "minzoom": 0,
             "maxzoom": 24,
             "layout": {
