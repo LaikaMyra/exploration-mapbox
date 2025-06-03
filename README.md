@@ -9,6 +9,7 @@ The application provides:
 - Location tracking and management
 - Job and technician management
 - Real-time data updates
+- Integration with Mapbox Studio for style and icon management
 
 ## Architecture
 
@@ -17,6 +18,7 @@ The project consists of two main parts:
    - Serves as a reference implementation
    - Uses MongoDB stand-in for data storage
    - Provides RESTful API endpoints
+   - Integrates with Mapbox Studio for map styling and icons
 
 2. **FlutterFlow Integration** (`/ff` directory)
    - Custom widget implementation
@@ -29,6 +31,7 @@ The project consists of two main parts:
    - Docker and Docker Compose
    - Node.js 14 or later
    - Mapbox access token
+   - Mapbox Studio account
 
 2. **Environment Setup**
    Create a `.env` file with:
@@ -36,6 +39,7 @@ The project consists of two main parts:
    MAPBOX_ACCESS_TOKEN=your_mapbox_token
    PORT=3000
    NODE_ENV=development
+   MAPBOX_STYLE_URL=mapbox://styles/myrajames/cmb4i4ddo00er01swguqs183k
    ```
 
 3. **Running with Docker**
@@ -43,6 +47,33 @@ The project consists of two main parts:
    docker-compose up
    ```
    The application will be available at `http://localhost:3000`
+
+## Mapbox Studio Integration
+
+This project uses Mapbox Studio for managing map styles and icons. To work with the styles:
+
+1. **Access Mapbox Studio**
+   - Visit [Mapbox Studio](https://studio.mapbox.com)
+   - Log in with your Mapbox account
+   - Navigate to the style: `cmb4i4ddo00er01swguqs183k`
+
+2. **Making Style Changes**
+   - Edit the style in Mapbox Studio
+   - Add or modify layers, colors, and icons
+   - Click "Publish" to make changes live
+   - Changes will automatically reflect in the application
+
+3. **Working with Icons**
+   - Upload custom icons in Mapbox Studio
+   - Use the icon picker to add them to your style
+   - Publish changes to make them available
+   - Icons are served directly from Mapbox's CDN
+   - No local icon assets are needed
+
+4. **Style Versioning**
+   - Mapbox Studio maintains version history
+   - You can revert to previous versions if needed
+   - Each published version gets a unique URL
 
 ## Data Structure
 
@@ -82,7 +113,7 @@ To use this as a custom widget in FlutterFlow:
 - The MongoDB stand-in uses JSON files to simulate a database
 - All API endpoints support CORS for cross-origin requests
 - The server includes comprehensive error logging
-- Static files (icons, CSS, JS) are served from the `/app` directory
+- All map styles and icons are managed through Mapbox Studio
 
 ## Security Considerations
 
@@ -96,7 +127,7 @@ To use this as a custom widget in FlutterFlow:
 1. **Map Not Loading**
    - Verify Mapbox access token
    - Check browser console for errors
-   - Ensure all required files are being served
+   - Ensure Mapbox Studio style is published and accessible
 
 2. **API Issues**
    - Verify JSON files exist in mongodb-standIn/collections

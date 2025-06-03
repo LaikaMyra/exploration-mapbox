@@ -7,12 +7,12 @@ services:
     volumes:
       - ./app:/app
       - ./mongodb-standIn:/mongodb-standIn
-      - ./app/icons:/app/icons
     ports:
       - "${PORT}:${PORT}"
     environment:
       - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
+      - MAPBOX_STYLE_URL=${MAPBOX_STYLE_URL}
     command: >
       sh -c "npm install && node server.js"
